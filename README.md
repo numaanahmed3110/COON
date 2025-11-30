@@ -71,12 +71,12 @@ c:LoginScreen<StatelessWidget>;f:emailController=X,passwordController=X;m:b S{a:
 ## Installation
 
 ```bash
-pip install coon-compress
+pip install coon
 ```
 
 Or install from source:
 ```bash
-git clone https://github.com/affanshaikhsurab/COON.git
+git clone https://github.com/AffanShaikhsurab/COON.git
 cd COON
 pip install -e .
 ```
@@ -359,7 +359,7 @@ COON/
 ### Setup Development Environment
 
 ```bash
-git clone https://github.com/affanshaikhsurab/COON.git
+git clone https://github.com/AffanShaikhsurab/COON.git
 cd COON
 pip install -e ".[dev]"
 ```
