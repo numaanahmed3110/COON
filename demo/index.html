@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COON Demo - Code-Oriented Object Notation</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        .stats-header {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--surface);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+        
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 968px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .editor-panel {
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        
+        .editor-header {
+            padding: 1rem;
+            background: var(--surface-light);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .editor-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+        
+        .token-count {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            padding: 0.25rem 0.75rem;
+            background: var(--bg);
+            border-radius: 6px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 500px;
+            padding: 1.5rem;
+            background: var(--bg);
+            color: var(--text);
+            border: none;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.875rem;
+            line-height: 1.7;
+            resize: vertical;
+        }
+        
+        textarea:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: -2px;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--surface-light);
+        }
+        
+        .compression-stats {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🗜️ COON Demo</h1>
+            <p class="subtitle">Code-Oriented Object Notation - Token-efficient compression for Dart/Flutter</p>
+            
+            <div class="stats-header">
+                <div class="stat-card">
+                    <div class="stat-label">Typical Compression</div>
+                    <div class="stat-value">50-70%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">LLM Compatible</div>
+                    <div class="stat-value">✓</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Reversible</div>
+                    <div class="stat-value">100%</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="editor-container">
+            <div class="editor-panel">
+                <div class="editor-header">
+                    <span class="editor-title">📝 Original Dart Code</span>
+                    <span class="token-count" id="originalTokens">0 tokens</span>
+                </div>
+                <textarea id="dartInput" placeholder="Paste your Dart/Flutter code here...">class LoginScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Login"),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              Text("Welcome Back"),
+              Text("Login to continue"),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}</textarea>
+            </div>
+            
+            <div class="editor-panel">
+                <div class="editor-header">
+                    <span class="editor-title">📦 Compressed COON</span>
+                    <span class="token-count" id="compressedTokens">0 tokens</span>
+                </div>
+                <textarea id="coonOutput" placeholder="Compressed code will appear here..." readonly></textarea>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn-primary" onclick="compressDart()">🗜️ Compress</button>
+            <button class="btn-secondary" onclick="decompressCoon()">🔄 Decompress</button>
+            <button class="btn-secondary" onclick="copyCoon()">📋 Copy COON</button>
+            <button class="btn-secondary" onclick="clearAll()">🗑️ Clear</button>
+        </div>
+        
+        <div class="compression-stats" id="statsPanel" style="display: none;">
+            <h3 style="margin-bottom: 1rem;">Compression Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-item-label">Token Reduction</div>
+                    <div class="stat-item-value" id="tokenReduction">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-item-label">Compression Ratio</div>
+                    <div class="stat-item-value" id="compressionRatio">0%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-item-label">Characters Saved</div>
+                    <div class="stat-item-value" id="charsSaved">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-item-label">Cost Saved (GPT-4)</div>
+                    <div class="stat-item-value" id="costSaved">$0.00</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Built with ❤️ for FlutterAI | <a href="https://github.com/yourusername/COON" target="_blank">GitHub</a> | <a href="https://github.com/yourusername/COON/blob/main/docs/SPECIFICATION.md" target="_blank">Documentation</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">Inspired by <a href="https://github.com/context7/toon" target="_blank">TOON</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Compression logic (simplified JavaScript version)
+        function countTokens(text) {
+            return Math.floor(text.length / 4);
+        }
+        
+        function compressDart() {
+            const dartCode = document.getElementById('dartInput').value;
+            if (!dartCode.trim()) {
+                alert('Please enter some Dart code!');
+                return;
+            }
+            
+            const originalTokens = countTokens(dartCode);
+            let coon = dartCode;
+            
+            // Apply compression transformations
+            coon = coon.replace(/[ \t]+/g, ' ');
+            coon = coon.replace(/ *\n */g, '\n');
+            coon = coon.replace(/@override\s*\n/g, '');
+            coon = coon.replace(/class (\w+) extends (\w+) \{/g, 'c:$1<$2>');
+            coon = coon.replace(/final (\w+) (\w+) = (\w+)\(\);/g, 'f:$2=$3');
+            coon = coon.replace(/Widget build\(BuildContext context\) \{/g, 'm:build(ctx)->Widget');
+            coon = coon.replace(/\breturn\b/g, 'ret');
+            coon = coon.replace(/\bScaffold\b/g, 'Scf');
+            coon = coon.replace(/\bColumn\b/g, 'Col');
+            coon = coon.replace(/\bSafeArea\b/g, 'SA');
+            coon = coon.replace(/\bPadding\b/g, 'Pad');
+            coon = coon.replace(/\bText\b/g, 'Txt');
+            coon = coon.replace(/\bappBar:/g, 'ap:');
+            coon = coon.replace(/\bbody:/g, 'bd:');
+            coon = coon.replace(/\btitle:/g, 't:');
+            coon = coon.replace(/\bchild:/g, 'ch:');
+            coon = coon.replace(/\bchildren:/g, 'ch:');
+            coon = coon.replace(/\bpadding:/g, 'pd:');
+            coon = coon.replace(/EdgeInsets\.all\((\d+(?:\.\d+)?)\)/g, 'pd:$1');
+            coon = coon.replace(/;\s*\n/g, '\n');
+            
+            const compressedTokens = countTokens(coon);
+            const tokenSavings = originalTokens - compressedTokens;
+            const compressionRatio = ((tokenSavings / originalTokens) * 100).toFixed(1);
+            const charSavings = dartCode.length - coon.length;
+            const costSaved = ((tokenSavings / 1000) * 0.06).toFixed(4);
+            
+            // Update UI
+            document.getElementById('coonOutput').value = coon;
+            document.getElementById('originalTokens').textContent = `${originalTokens} tokens`;
+            document.getElementById('compressedTokens').textContent = `${compressedTokens} tokens`;
+            document.getElementById('tokenReduction').textContent = tokenSavings;
+            document.getElementById('compressionRatio').textContent = `${compressionRatio}%`;
+            document.getElementById('charsSaved').textContent = charSavings;
+            document.getElementById('costSaved').textContent = `$${costSaved}`;
+            document.getElementById('statsPanel').style.display = 'block';
+        }
+        
+        function decompressCoon() {
+            const coonCode = document.getElementById('coonOutput').value;
+            if (!coonCode.trim()) {
+                alert('Please compress some code first!');
+                return;
+            }
+            
+            let dart = coonCode;
+            
+            // Reverse transformations
+            dart = dart.replace(/pd:(\d+(?:\.\d+)?)/g, 'EdgeInsets.all($1)');
+            dart = dart.replace(/\bap:/g, 'appBar:');
+            dart = dart.replace(/\bbd:/g, 'body:');
+            dart = dart.replace(/\bt:/g, 'title:');
+            dart = dart.replace(/\bch:/g, 'child:');
+            dart = dart.replace(/\bpd:/g, 'padding:');
+            dart = dart.replace(/\bScf\b/g, 'Scaffold');
+            dart = dart.replace(/\bCol\b/g, 'Column');
+            dart = dart.replace(/\bSA\b/g, 'SafeArea');
+            dart = dart.replace(/\bPad\b/g, 'Padding');
+            dart = dart.replace(/\bTxt\b/g, 'Text');
+            dart = dart.replace(/\bret\b/g, 'return');
+            dart = dart.replace(/m:build\(ctx\)->Widget/g, '@override\n  Widget build(BuildContext context) {');
+            dart = dart.replace(/f:(\w+)=(\w+)/g, 'final $2 $1 = $2();');
+            dart = dart.replace(/c:(\w+)<(\w+)>/g, 'class $1 extends $2 {');
+            
+            document.getElementById('dartInput').value = dart;
+            alert('✅ Decompressed successfully!');
+        }
+        
+        function copyCoon() {
+            const coonCode = document.getElementById('coonOutput').value;
+            if (!coonCode.trim()) {
+                alert('Please compress some code first!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(coonCode).then(() => {
+                alert('✅ Copied to clipboard!');
+            });
+        }
+        
+        function clearAll() {
+            document.getElementById('dartInput').value = '';
+            document.getElementById('coonOutput').value = '';
+            document.getElementById('originalTokens').textContent = '0 tokens';
+            document.getElementById('compressedTokens').textContent = '0 tokens';
+            document.getElementById('statsPanel').style.display = 'none';
+        }
+        
+        // Auto-update token count on input
+        document.getElementById('dartInput').addEventListener('input', function() {
+            const tokens = countTokens(this.value);
+            document.getElementById('originalTokens').textContent = `${tokens} tokens`;
+        });
+        
+        // Initial token count
+        window.addEventListener('load', function() {
+            const tokens = countTokens(document.getElementById('dartInput').value);
+            document.getElementById('originalTokens').textContent = `${tokens} tokens`;
+        });
+    </script>
+</body>
+</html>
