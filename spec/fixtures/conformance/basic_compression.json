@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "description": "Basic compression conformance tests",
+  "note": "Current implementation uses () instead of {} - TODO: update compressor to match spec",
+  "testCases": [
+    {
+      "id": "basic_001",
+      "name": "Simple Text widget",
+      "input": "Text(\"Hello World\")",
+      "expected": "T(\"Hello World\")",
+      "strategy": "basic"
+    },
+    {
+      "id": "basic_002",
+      "name": "Scaffold with body",
+      "input": "Scaffold(body: Text(\"Hello\"))",
+      "expected": "S(b:T(\"Hello\"))",
+      "strategy": "basic"
+    },
+    {
+      "id": "basic_003",
+      "name": "Column with children",
+      "input": "Column(children: [Text(\"A\"), Text(\"B\")])",
+      "expected": "C(h:[T(\"A\"),T(\"B\")])",
+      "strategy": "basic"
+    },
+    {
+      "id": "basic_004",
+      "name": "Container with padding",
+      "input": "Container(padding: EdgeInsets.all(16))",
+      "expected": "K(p:EdgeInsets.all(16))",
+      "strategy": "basic",
+      "note": "EdgeInsets shorthand not yet implemented"
+    },
+    {
+      "id": "basic_005",
+      "name": "Row with mainAxisAlignment",
+      "input": "Row(mainAxisAlignment: MainAxisAlignment.center)",
+      "expected": "R(A:MainAxisAlignment.center)",
+      "strategy": "basic"
+    }
+  ]
+}

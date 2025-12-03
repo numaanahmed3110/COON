@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "description": "Round-trip compression/decompression conformance tests",
+  "testCases": [
+    {
+      "id": "rt_001",
+      "name": "Simple Text round trip",
+      "input": "Text(\"Hello\")",
+      "strategy": "basic"
+    },
+    {
+      "id": "rt_002",
+      "name": "Scaffold with AppBar round trip",
+      "input": "Scaffold(appBar: AppBar(title: Text(\"Title\")), body: Text(\"Content\"))",
+      "strategy": "basic"
+    },
+    {
+      "id": "rt_003",
+      "name": "Column with children round trip",
+      "input": "Column(children: [Text(\"A\"), Text(\"B\"), Text(\"C\")])",
+      "strategy": "basic"
+    },
+    {
+      "id": "rt_004",
+      "name": "Container with padding round trip",
+      "input": "Container(padding: EdgeInsets.all(16), child: Text(\"Padded\"))",
+      "strategy": "basic"
+    },
+    {
+      "id": "rt_005",
+      "name": "Nested widgets round trip",
+      "input": "Scaffold(body: SafeArea(child: Center(child: Text(\"Centered\"))))",
+      "strategy": "basic"
+    }
+  ]
+}

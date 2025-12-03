@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "description": "Edge case conformance tests",
+  "note": "Basic strategy uses (), aggressive uses {} - matches current implementation",
+  "testCases": [
+    {
+      "id": "edge_001",
+      "name": "Empty string",
+      "input": "",
+      "expected": "",
+      "strategy": "basic"
+    },
+    {
+      "id": "edge_002",
+      "name": "Whitespace only",
+      "input": "   \n\t  ",
+      "expected": "",
+      "strategy": "basic"
+    },
+    {
+      "id": "edge_003",
+      "name": "String with special characters",
+      "input": "Text(\"Hello, \\\"World\\\"!\")",
+      "expected": "T(\"Hello,\\\"World\\\"!\")",
+      "strategy": "basic"
+    },
+    {
+      "id": "edge_004",
+      "name": "Nested empty widgets",
+      "input": "Column(children: [])",
+      "expected": "C(h:[])",
+      "strategy": "basic"
+    },
+    {
+      "id": "edge_005",
+      "name": "Boolean true",
+      "input": "Scaffold(resizeToAvoidBottomInset: true)",
+      "expected": "S{resizeToAvoidBottomInset:1}",
+      "strategy": "aggressive"
+    },
+    {
+      "id": "edge_006",
+      "name": "Boolean false",
+      "input": "Scaffold(resizeToAvoidBottomInset: false)",
+      "expected": "S{resizeToAvoidBottomInset:0}",
+      "strategy": "aggressive"
+    },
+    {
+      "id": "edge_007",
+      "name": "Numeric values preserved",
+      "input": "SizedBox(height: 100, width: 200)",
+      "expected": "Z(e:100,W:200)",
+      "strategy": "basic"
+    },
+    {
+      "id": "edge_008",
+      "name": "Multiple annotations removed",
+      "input": "@override @deprecated Widget build(BuildContext context) {}",
+      "expected": "@ov:@deprecated W build{ctx context}{}",
+      "strategy": "aggressive",
+      "note": "Annotation removal not fully implemented"
+    }
+  ]
+}
