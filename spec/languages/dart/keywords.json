@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "language": "dart",
+  "description": "Dart keyword abbreviations for COON format",
+  "abbreviations": {
+    "class": "c:",
+    "final": "f:",
+    "extends": "<",
+    "import": "im:",
+    "return": "ret",
+    "async": "asy",
+    "await": "awt",
+    "const": "cn:",
+    "static": "st:",
+    "void": "v:",
+    "override": "ov:",
+    "implements": ">",
+    "with": "+",
+    "Widget": "W",
+    "BuildContext": "ctx",
+    "true": "1",
+    "false": "0",
+    "null": "_"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "language": "dart",
+  "displayName": "Dart/Flutter",
+  "framework": "flutter",
+  "extensions": [".dart"],
+  "features": {
+    "classes": true,
+    "widgets": true,
+    "mixins": true,
+    "extensions": true,
+    "generics": true,
+    "async_await": true
+  },
+  "dataFiles": {
+    "widgets": "widgets.json",
+    "properties": "properties.json",
+    "keywords": "keywords.json"
+  },
+  "detection": {
+    "patterns": [
+      "import 'package:",
+      "StatelessWidget",
+      "StatefulWidget",
+      "BuildContext",
+      "@override",
+      "Widget build"
+    ],
+    "requiredScore": 0.5
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "version": "1.0.0",
+  "description": "Widget abbreviation conformance tests",
+  "note": "Current implementation uses () instead of {} - TODO: update compressor to match spec",
+  "testCases": [
+    {
+      "id": "widget_001",
+      "name": "Scaffold abbreviation",
+      "input": "Scaffold()",
+      "expected": "S()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_002",
+      "name": "Column abbreviation",
+      "input": "Column()",
+      "expected": "C()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_003",
+      "name": "Row abbreviation",
+      "input": "Row()",
+      "expected": "R()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_004",
+      "name": "Text abbreviation",
+      "input": "Text(\"content\")",
+      "expected": "T(\"content\")",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_005",
+      "name": "Container abbreviation",
+      "input": "Container()",
+      "expected": "K()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_006",
+      "name": "Center abbreviation",
+      "input": "Center()",
+      "expected": "N()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_007",
+      "name": "Padding abbreviation",
+      "input": "Padding()",
+      "expected": "P()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_008",
+      "name": "SafeArea abbreviation",
+      "input": "SafeArea()",
+      "expected": "A()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_009",
+      "name": "SizedBox abbreviation",
+      "input": "SizedBox()",
+      "expected": "Z()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_010",
+      "name": "AppBar abbreviation",
+      "input": "AppBar()",
+      "expected": "B()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_011",
+      "name": "TextField abbreviation",
+      "input": "TextField()",
+      "expected": "F()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_012",
+      "name": "ElevatedButton abbreviation",
+      "input": "ElevatedButton()",
+      "expected": "E()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_013",
+      "name": "ListView abbreviation",
+      "input": "ListView()",
+      "expected": "L()",
+      "strategy": "basic"
+    },
+    {
+      "id": "widget_014",
+      "name": "Stack abbreviation",
+      "input": "Stack()",
+      "expected": "St()",
+      "strategy": "basic"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "description": "Class definition compression conformance tests",
+  "note": "Current implementation output differs from ideal spec - TODO: update compressor",
+  "testCases": [
+    {
+      "id": "class_001",
+      "name": "Simple StatelessWidget class",
+      "input": "class MyWidget extends StatelessWidget {}",
+      "expected": "c:MyWidget < StatelessWidget{}",
+      "strategy": "aggressive"
+    },
+    {
+      "id": "class_002",
+      "name": "StatefulWidget class",
+      "input": "class MyPage extends StatefulWidget {}",
+      "expected": "c:MyPage < StatefulWidget{}",
+      "strategy": "aggressive"
+    },
+    {
+      "id": "class_003",
+      "name": "Class with final fields",
+      "input": "class Test { final String name; final int age; }",
+      "expected": "c:Test{f:String name; f:int age;}",
+      "strategy": "aggressive"
+    }
+  ]
+}
