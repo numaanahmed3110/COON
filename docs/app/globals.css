@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #14120B;
+}
+
+@layer base {
+  body {
+    @apply bg-[#14120B] text-white;
+    font-family: "Instrument Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "wdth" 100;
+  }
+}
+
+@layer components {
+  /* Code block styling */
+  .prose pre {
+    @apply bg-[#14120B] rounded-lg p-4 overflow-x-auto border border-white/10;
+  }
+
+  .prose code {
+    @apply bg-white/10 px-1.5 py-0.5 rounded text-sm text-white;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0 text-white;
+  }
+
+  /* Table styling */
+  .prose table {
+    @apply w-full border-collapse;
+  }
+
+  .prose th,
+  .prose td {
+    @apply border border-white/20 px-3 py-2 text-white;
+  }
+
+  .prose th {
+    @apply bg-white/5 font-semibold text-white;
+  }
+
+  /* Custom block styling */
+  .custom-block {
+    @apply border-l-4 p-4 my-4 rounded-r border-white/30 bg-white/5;
+  }
+
+  .custom-block.tip,
+  .custom-block.warning,
+  .custom-block.danger,
+  .custom-block.info {
+    @apply border-white/30 bg-white/5 text-white;
+  }
+}
+
+/* Syntax highlighting */
+.hljs {
+  @apply bg-transparent text-white;
+}
+
+/* Prose typography - all white */
+.prose {
+  @apply text-white;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply text-white;
+}
+
+.prose p,
+.prose li,
+.prose a {
+  @apply text-white;
+}
+
+.prose a {
+  @apply text-white/80 hover:text-white;
+}
+
+.prose strong {
+  @apply text-white;
+}
+
+/* Instrument Sans font */
+.instrument-sans {
+  font-family: "Instrument Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+

@@ -4,8 +4,11 @@ title: COON - Code-Oriented Object Notation
 titleTemplate: Token-Efficient Code Compression
 
 hero:
-  name: COON
+  name: " "
   text: Code-Oriented Object Notation
+  image:
+    src: /coon-text-icon.svg
+    alt: COON
   tagline: Token-efficient compression format for Dart/Flutter code, optimized for LLM contexts. Achieve 60-70% token reduction with lossless round-trip compression.
   actions:
     - theme: brand
