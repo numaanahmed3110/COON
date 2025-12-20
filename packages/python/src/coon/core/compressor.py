@@ -6,7 +6,10 @@ for actual compression logic.
 """
 
 import time
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
+
+if TYPE_CHECKING:
+    from ..strategies.base import CompressionStrategy
 
 from ..strategies import StrategySelector, get_strategy
 from .config import CompressionConfig
@@ -68,7 +71,7 @@ class Compressor:
         if self.config.enable_metrics:
             self._init_metrics()
 
-    def _init_registry(self):
+    def _init_registry(self) -> None:
         """Initialize component registry if configured."""
         try:
             from ..utils.registry import ComponentRegistry
@@ -77,7 +80,7 @@ class Compressor:
         except ImportError:
             pass
 
-    def _init_metrics(self):
+    def _init_metrics(self) -> None:
         """Initialize metrics collector if enabled."""
         try:
             from ..analysis.metrics import MetricsCollector
@@ -199,7 +202,7 @@ class Compressor:
         selected = self._selector.select_strategy(code, len(code), has_registry=has_registry)
         return selected.value
 
-    def _get_strategy_implementation(self, strategy_name: str):
+    def _get_strategy_implementation(self, strategy_name: str) -> "CompressionStrategy":
         """Get the strategy implementation with language support."""
         if strategy_name == "component_ref" and self._registry:
             strategy = get_strategy(strategy_name, language=self._language)
@@ -208,7 +211,7 @@ class Compressor:
 
         return get_strategy(strategy_name, language=self._language)
 
-    def _validate_result(self, original: str, result: CompressionResult):
+    def _validate_result(self, original: str, result: CompressionResult) -> None:
         """Validate compression result."""
         try:
             from ..utils.validator import CompressionValidator
@@ -253,7 +256,7 @@ class Decompressor:
         self._reverse_keywords: dict = {}
         self._load_reverse_maps()
 
-    def _load_reverse_maps(self):
+    def _load_reverse_maps(self) -> None:
         """Load reverse abbreviation maps from language handler or fallback to data module."""
         try:
             from ..languages import DartLanguageHandler, LanguageRegistry

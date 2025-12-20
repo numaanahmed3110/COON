@@ -36,7 +36,7 @@ except ImportError:
 
 @click.group()
 @click.version_option(version="1.0.0", prog_name="coon")
-def cli():
+def cli() -> None:
     """
     COON: Code-Oriented Object Notation
 
@@ -66,7 +66,7 @@ def cli():
 )
 @click.option("--validate/--no-validate", default=False, help="Validate compression result")
 @click.option("--analyze/--no-analyze", default=False, help="Include code analysis")
-def compress(input_file: str, output: Optional[str], strategy: str, validate: bool, analyze: bool):
+def compress(input_file: str, output: Optional[str], strategy: str, validate: bool, analyze: bool) -> None:
     """Compress Dart code to COON format."""
     from ..core import Compressor
 
@@ -101,7 +101,7 @@ def compress(input_file: str, output: Optional[str], strategy: str, validate: bo
 @click.argument("input_file", type=click.Path(exists=True))
 @click.option("-o", "--output", type=click.Path(), help="Output file (default: stdout)")
 @click.option("--format/--no-format", default=True, help="Format output code")
-def decompress(input_file: str, output: Optional[str], format: bool):
+def decompress(input_file: str, output: Optional[str], format: bool) -> None:
     """Decompress COON format back to Dart."""
     from ..core import Decompressor
 
@@ -126,7 +126,7 @@ def decompress(input_file: str, output: Optional[str], format: bool):
 
 @cli.command()
 @click.argument("input_file", type=click.Path(exists=True))
-def analyze(input_file: str):
+def analyze(input_file: str) -> None:
     """Analyze Dart code for compression opportunities."""
     from ..analysis import CodeAnalyzer
 
@@ -145,7 +145,7 @@ def analyze(input_file: str):
 
 @cli.command()
 @click.argument("input_file", type=click.Path(exists=True))
-def stats(input_file: str):
+def stats(input_file: str) -> None:
     """Show compression statistics for a Dart file."""
     from ..core import Compressor
 
@@ -200,7 +200,7 @@ def stats(input_file: str):
 @cli.command()
 @click.argument("input_file", type=click.Path(exists=True))
 @click.option("--strict/--no-strict", default=False, help="Use strict validation mode")
-def validate(input_file: str, strict: bool):
+def validate(input_file: str, strict: bool) -> None:
     """Validate compression round-trip for a Dart file."""
     from ..core import Compressor, Decompressor
     from ..utils import CompressionValidator
@@ -255,7 +255,7 @@ def validate(input_file: str, strict: bool):
 
 @cli.command()
 @click.option("--metrics-file", type=click.Path(), help="Metrics JSON file")
-def report(metrics_file: Optional[str]):
+def report(metrics_file: Optional[str]) -> None:
     """Generate metrics report from collected data."""
     from ..analysis import MetricsCollector
 
@@ -275,7 +275,7 @@ def report(metrics_file: Optional[str]):
     click.echo(report)
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     cli()
 

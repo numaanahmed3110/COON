@@ -40,11 +40,11 @@ class StrategySelector:
     to select the optimal compression strategy.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._metrics: dict[StrategyName, StrategyMetrics] = {}
         self._initialize_metrics()
 
-    def _initialize_metrics(self):
+    def _initialize_metrics(self) -> None:
         """Initialize default metrics for all strategies."""
         default_ratios = {
             StrategyName.BASIC: 0.35,
@@ -182,7 +182,7 @@ class StrategySelector:
         processing_time_ms: float,
         success: bool,
         reversible: bool,
-    ):
+    ) -> None:
         """
         Update historical metrics for a strategy.
 

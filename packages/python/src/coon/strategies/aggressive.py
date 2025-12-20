@@ -95,7 +95,7 @@ class AggressiveStrategy(CompressionStrategy):
         # 4. Collect and merge fields
         fields: list[str] = []
 
-        def collect_field(match):
+        def collect_field(match: re.Match[str]) -> str:
             field_name = match.group(2)
             field_value = match.group(3)
             fields.append(f"{field_name}={field_value}")

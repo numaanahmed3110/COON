@@ -28,7 +28,7 @@ class LanguageSpec:
     framework: Optional[str] = None
     features: dict[str, bool] = field(default_factory=dict)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.display_name is None:
             self.display_name = self.name.title()
 

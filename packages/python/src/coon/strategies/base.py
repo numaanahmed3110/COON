@@ -29,7 +29,7 @@ class StrategyConfig:
     language: str = "dart"
     parameters: Optional[dict[str, Any]] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.parameters is None:
             self.parameters = {}
 
@@ -60,7 +60,7 @@ class CompressionStrategy(ABC):
         """Get the language for this strategy."""
         return self._language
 
-    def _get_abbreviations(self) -> tuple:
+    def _get_abbreviations(self) -> tuple[dict[str, str], dict[str, str], dict[str, str]]:
         """
         Get abbreviation maps from language handler or fallback to data module.
 

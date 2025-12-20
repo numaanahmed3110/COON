@@ -23,7 +23,7 @@ class DartParser:
         'class'
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the parser."""
         self.lexer = DartLexer()
         self.tokens: list[Token] = []
@@ -301,7 +301,7 @@ class DartParser:
 
         return node
 
-    def _parse_class_body(self, class_node: ASTNode):
+    def _parse_class_body(self, class_node: ASTNode) -> None:
         """Parse the body of a class."""
         self._advance()  # '{'
         brace_count = 1
@@ -493,7 +493,7 @@ class DartParser:
 
         return node
 
-    def _parse_parameters(self) -> list[dict]:
+    def _parse_parameters(self) -> list[dict[str, Any]]:
         """Parse function parameters."""
         params = []
         self._advance()  # '('
@@ -669,7 +669,7 @@ class DartParser:
 
         return node
 
-    def _skip_balanced(self, open_char: str, close_char: str):
+    def _skip_balanced(self, open_char: str, close_char: str) -> None:
         """Skip balanced delimiters."""
         if not self._match_value(open_char):
             return

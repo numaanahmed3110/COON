@@ -69,7 +69,7 @@ class ASTNode:
     line: int = 0
     column: int = 0
 
-    def add_child(self, child: "ASTNode"):
+    def add_child(self, child: "ASTNode") -> None:
         """Add a child node."""
         self.children.append(child)
 
@@ -106,7 +106,7 @@ class ASTNode:
         """Get a property value with optional default."""
         return self.properties.get(key, default)
 
-    def set_property(self, key: str, value: Any):
+    def set_property(self, key: str, value: Any) -> None:
         """Set a property value."""
         self.properties[key] = value
 
