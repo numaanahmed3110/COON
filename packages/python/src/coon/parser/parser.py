@@ -2,7 +2,7 @@
 Dart code parser - converts tokens to AST.
 """
 
-from typing import List, Optional
+from typing import List, Optional, Any
 from .tokens import Token, TokenType
 from .lexer import DartLexer
 from .ast_nodes import ASTNode, create_root_node
@@ -119,7 +119,9 @@ class DartParser:
         if value is not None and token.value != value:
             raise SyntaxError(f"Expected '{value}', got '{token.value}'")
         
-        return self._advance()
+        result = self._advance()
+        assert result is not None, f"Expected token but got None after {token_type}"
+        return result
     
     def _parse_statement(self) -> Optional[ASTNode]:
         """Parse a top-level statement."""
@@ -170,6 +172,7 @@ class DartParser:
     def _parse_import(self) -> ASTNode:
         """Parse import statement."""
         token = self._advance()  # 'import'
+        assert token is not None
         node = ASTNode(
             node_type='import',
             value=None,
@@ -194,7 +197,9 @@ class DartParser:
         
         # show/hide combinators
         while self._match_value('show') or self._match_value('hide'):
-            combinator = self._advance().value  # 'show' or 'hide'
+            combinator_token = self._advance()  # 'show' or 'hide'
+            assert combinator_token is not None
+            combinator = combinator_token.value
             names = []
             
             while True:
@@ -225,6 +230,7 @@ class DartParser:
             self._advance()
         
         token = self._advance()  # 'class'
+        assert token is not None
         node = ASTNode(
             node_type='class',
             value=None,
@@ -301,6 +307,7 @@ class DartParser:
         
         while not self._is_end() and brace_count > 0:
             token = self._current_token()
+            assert token is not None
             
             if token.value == '{':
                 brace_count += 1
@@ -350,6 +357,7 @@ class DartParser:
     def _parse_constructor(self) -> ASTNode:
         """Parse a constructor."""
         token = self._advance()  # Constructor name
+        assert token is not None
         node = ASTNode(
             node_type='constructor',
             value=token.value,
@@ -387,6 +395,7 @@ class DartParser:
     def _parse_mixin(self) -> ASTNode:
         """Parse mixin declaration."""
         token = self._advance()  # 'mixin'
+        assert token is not None
         node = ASTNode(
             node_type='mixin',
             value=None,
@@ -425,6 +434,7 @@ class DartParser:
         """Parse function declaration."""
         # Return type
         return_token = self._advance()
+        assert return_token is not None
         return_type = return_token.value
         
         # Function name
@@ -485,17 +495,20 @@ class DartParser:
         self._advance()  # '('
         
         while not self._is_end() and not self._match_value(')'):
-            param = {}
+            param: dict[str, Any] = {}
             
             # Skip modifiers like 'required'
             while self._match_value('required') or self._match_value('covariant'):
-                modifier = self._advance().value
+                modifier_token = self._advance()
+                assert modifier_token is not None
+                modifier = modifier_token.value
                 param.setdefault('modifiers', []).append(modifier)
             
             # Type
             if self._match(TokenType.IDENTIFIER, TokenType.WIDGET, TokenType.KEYWORD):
                 type_token = self._advance()
-                param['type'] = type_token.value
+                if type_token:
+                    param['type'] = type_token.value
                 
                 # Generic type
                 if self._match_value('<'):
@@ -509,7 +522,8 @@ class DartParser:
             # Name
             if self._match(TokenType.IDENTIFIER):
                 name_token = self._advance()
-                param['name'] = name_token.value
+                if name_token:
+                    param['name'] = name_token.value
             
             # Default value
             if self._match_value('='):
@@ -537,7 +551,9 @@ class DartParser:
         while self._match_value('final') or self._match_value('const') or \
               self._match_value('var') or self._match_value('late') or \
               self._match_value('static'):
-            modifiers.append(self._advance().value)
+            mod_token = self._advance()
+            if mod_token:
+                modifiers.append(mod_token.value)
         
         token = self._current_token()
         node = ASTNode(
@@ -585,6 +601,8 @@ class DartParser:
         
         while not self._is_end() and depth > 0:
             token = self._advance()
+            if token is None:
+                break
             if token.value == '<':
                 depth += 1
                 current += '<'
@@ -639,6 +657,7 @@ class DartParser:
     def _parse_widget_call(self) -> ASTNode:
         """Parse a widget constructor call."""
         token = self._advance()  # Widget name
+        assert token is not None
         node = ASTNode(
             node_type='widget_call',
             value=token.value,
@@ -663,6 +682,8 @@ class DartParser:
         
         while not self._is_end() and depth > 0:
             token = self._advance()
+            if token is None:
+                break
             if token.value == open_char:
                 depth += 1
             elif token.value == close_char:
