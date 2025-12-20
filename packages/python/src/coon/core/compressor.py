@@ -63,9 +63,9 @@ class Compressor:
         self.config = config or CompressionConfig()
         self._language = language
         self._selector = StrategySelector()
-        self._analyzer: Optional["CodeAnalyzer"] = None
-        self._registry: Optional["ComponentRegistry"] = None
-        self._metrics: Optional["MetricsCollector"] = None
+        self._analyzer: Optional[CodeAnalyzer] = None
+        self._registry: Optional[ComponentRegistry] = None
+        self._metrics: Optional[MetricsCollector] = None
 
         # Lazy-load optional components
         if self.config.registry_path:

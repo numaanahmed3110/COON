@@ -5,9 +5,9 @@ Code analysis for intelligent compression.
 import re
 from collections import Counter
 from dataclasses import dataclass
+from typing import Any
 
 from ..data import get_widgets
-from typing import Any
 
 
 @dataclass
