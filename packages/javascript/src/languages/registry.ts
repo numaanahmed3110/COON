@@ -117,14 +117,21 @@ export class LanguageRegistry {
 
 // Auto-register default languages
 function registerDefaultLanguages(): void {
-  try {
-    // Import and register Dart handler
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { DartLanguageHandler } = require("./dart");
-    LanguageRegistry.register("dart", DartLanguageHandler);
-  } catch (e) {
-    // Dart handler not available
-  }
+    try {
+        // Import and register Dart handler
+        const { DartLanguageHandler } = require('./dart');
+        LanguageRegistry.register('dart', DartLanguageHandler);
+    } catch (e) {
+        // Dart handler not available
+    }
+    
+    try {
+        // Import and register JavaScript handler
+        const { JavaScriptLanguageHandler } = require('./javascript');
+        LanguageRegistry.register('javascript', JavaScriptLanguageHandler);
+    } catch (e) {
+        // JavaScript handler not available
+    }
 }
 
 registerDefaultLanguages();

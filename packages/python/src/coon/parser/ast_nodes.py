@@ -160,8 +160,8 @@ def create_root_node() -> ASTNode:
 def create_class_node(
     name: str,
     extends: Optional[str] = None,
-    implements: Optional[list[str]] = None,
-    mixins: Optional[list[str]] = None,
+    implements: Optional[str] = None,
+    mixins: Optional[str] = None,
     line: int = 0,
     column: int = 0,
 ) -> ASTNode:
@@ -243,8 +243,8 @@ def create_variable_node(
 def create_import_node(
     path: str,
     alias: Optional[str] = None,
-    show: Optional[list[str]] = None,
-    hide: Optional[list[str]] = None,
+    show: Optional[str] = None,
+    hide: Optional[str] = None,
     line: int = 0,
     column: int = 0,
 ) -> ASTNode:
