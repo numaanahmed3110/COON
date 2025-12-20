@@ -11,6 +11,7 @@ with fallback to spec/data/ for backwards compatibility.
 import json
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 # Default language for backwards compatibility
 _DEFAULT_LANGUAGE = "dart"
@@ -83,13 +84,13 @@ def _get_spec_data_path() -> Path:
     return _get_language_data_path(_DEFAULT_LANGUAGE)
 
 
-def _load_json(filename: str) -> dict:
+def _load_json(filename: str) -> dict[str, Any]:
     """Load JSON file from spec/data directory."""
     path = _get_spec_data_path() / filename
     if not path.exists():
         raise FileNotFoundError(f"Spec data file not found: {path}")
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        return dict(json.load(f))
 
 
 @lru_cache(maxsize=1)
@@ -102,7 +103,7 @@ def get_widgets() -> dict[str, str]:
         Example: {"Scaffold": "S", "Column": "C", ...}
     """
     data = _load_json("widgets.json")
-    return data.get("abbreviations", {})
+    return dict(data.get("abbreviations", {}))
 
 
 @lru_cache(maxsize=1)
@@ -115,7 +116,7 @@ def get_properties() -> dict[str, str]:
         Example: {"appBar:": "a:", "body:": "b:", ...}
     """
     data = _load_json("properties.json")
-    return data.get("abbreviations", {})
+    return dict(data.get("abbreviations", {}))
 
 
 @lru_cache(maxsize=1)
@@ -128,7 +129,7 @@ def get_keywords() -> dict[str, str]:
         Example: {"class": "c:", "final": "f:", ...}
     """
     data = _load_json("keywords.json")
-    return data.get("abbreviations", {})
+    return dict(data.get("abbreviations", {}))
 
 
 def get_all_abbreviations() -> dict[str, dict[str, str]]:
@@ -175,7 +176,7 @@ def get_reverse_keywords() -> dict[str, str]:
     return {v: k for k, v in get_keywords().items()}
 
 
-def clear_cache():
+def clear_cache() -> None:
     """Clear all cached data. Useful for testing or after updating spec files."""
     get_widgets.cache_clear()
     get_properties.cache_clear()

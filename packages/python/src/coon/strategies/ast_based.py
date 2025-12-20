@@ -82,7 +82,7 @@ class ASTBasedStrategy(CompressionStrategy):
         comments = []
         comment_pattern = r"(//[^\n]*|/\*[\s\S]*?\*/)"
 
-        def preserve_comment(match):
+        def preserve_comment(match: re.Match[str]) -> str:
             comments.append(match.group(0))
             return f"__COMMENT_{len(comments) - 1}__"
 

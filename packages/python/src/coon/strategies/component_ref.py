@@ -5,6 +5,8 @@ Replaces known components with references from a registry.
 Achieves highest compression for component-heavy code.
 """
 
+from typing import Any, Optional
+
 from .aggressive import AggressiveStrategy
 from .base import CompressionStrategy, StrategyConfig
 
@@ -20,7 +22,7 @@ class ComponentRefStrategy(CompressionStrategy):
     Expected compression ratio: 70-80%
     """
 
-    def __init__(self, registry=None, language: str = "dart"):
+    def __init__(self, registry: Optional[Any] = None, language: str = "dart"):
         """
         Initialize with optional component registry.
 
@@ -56,7 +58,7 @@ class ComponentRefStrategy(CompressionStrategy):
             parameters={"component_threshold": 50, "match_tolerance": 0.85},
         )
 
-    def set_registry(self, registry):
+    def set_registry(self, registry: Any) -> None:
         """
         Set the component registry.
 
@@ -89,7 +91,7 @@ class ComponentRefStrategy(CompressionStrategy):
 
         if component:
             # Use component reference
-            return component.compress_reference()
+            return str(component.compress_reference())
 
         # No matching component, fall back to aggressive
         return self._fallback.compress(code)

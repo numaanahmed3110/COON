@@ -24,7 +24,7 @@ class DartLanguageHandler(LanguageHandler):
         >>> print(widgets.get("Scaffold"))  # "S"
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Dart language handler."""
         self._spec_data: Optional[dict[str, Any]] = None
         self._widgets: Optional[dict[str, str]] = None
@@ -84,7 +84,7 @@ class DartLanguageHandler(LanguageHandler):
         if not path.exists():
             raise FileNotFoundError(f"Language data file not found: {path}")
         with open(path, encoding="utf-8") as f:
-            return json.load(f)
+            return dict(json.load(f))
 
     def _load_spec_data(self) -> dict[str, Any]:
         """Load and cache the spec.json file."""

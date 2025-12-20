@@ -6,10 +6,13 @@ for actual compression logic.
 """
 
 import time
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 if TYPE_CHECKING:
+    from ..analysis.analyzer import CodeAnalyzer
+    from ..analysis.metrics import MetricsCollector
     from ..strategies.base import CompressionStrategy
+    from ..utils.registry import ComponentRegistry
 
 from ..strategies import StrategySelector, get_strategy
 from .config import CompressionConfig
@@ -60,9 +63,9 @@ class Compressor:
         self.config = config or CompressionConfig()
         self._language = language
         self._selector = StrategySelector()
-        self._analyzer = None
-        self._registry = None
-        self._metrics = None
+        self._analyzer: Optional["CodeAnalyzer"] = None
+        self._registry: Optional["ComponentRegistry"] = None
+        self._metrics: Optional["MetricsCollector"] = None
 
         # Lazy-load optional components
         if self.config.registry_path:
@@ -132,7 +135,7 @@ class Compressor:
         if analyze_code and self._analyzer is None:
             try:
                 from ..analysis.analyzer import CodeAnalyzer
-                self._analyzer = CodeAnalyzer()  # type: ignore[assignment]
+                self._analyzer = CodeAnalyzer()
             except ImportError:
                 pass
 
@@ -182,7 +185,7 @@ class Compressor:
 
         return result
 
-    def _select_strategy(self, code: str, strategy: str, analysis=None) -> str:
+    def _select_strategy(self, code: str, strategy: str, analysis: Optional[Any] = None) -> str:
         """Select the appropriate strategy."""
         if strategy.lower() != "auto":
             return strategy.lower()
@@ -205,8 +208,10 @@ class Compressor:
     def _get_strategy_implementation(self, strategy_name: str) -> "CompressionStrategy":
         """Get the strategy implementation with language support."""
         if strategy_name == "component_ref" and self._registry:
+            from ..strategies.component_ref import ComponentRefStrategy
             strategy = get_strategy(strategy_name, language=self._language)
-            strategy.set_registry(self._registry)
+            if isinstance(strategy, ComponentRefStrategy):
+                strategy.set_registry(self._registry)
             return strategy
 
         return get_strategy(strategy_name, language=self._language)
@@ -251,9 +256,9 @@ class Decompressor:
             language: Language identifier (default: "dart")
         """
         self._language = language
-        self._reverse_widgets: dict = {}
-        self._reverse_properties: dict = {}
-        self._reverse_keywords: dict = {}
+        self._reverse_widgets: dict[str, str] = {}
+        self._reverse_properties: dict[str, str] = {}
+        self._reverse_keywords: dict[str, str] = {}
         self._load_reverse_maps()
 
     def _load_reverse_maps(self) -> None:

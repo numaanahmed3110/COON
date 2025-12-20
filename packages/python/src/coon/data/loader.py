@@ -29,7 +29,8 @@ def load_fixtures(fixture_name: str) -> list[dict[str, Any]]:
     with open(fixtures_path, encoding="utf-8") as f:
         data = json.load(f)
 
-    return data.get("testCases", [])
+    test_cases: list[dict[str, Any]] = data.get("testCases", [])
+    return test_cases
 
 
 def load_all_fixtures() -> dict[str, list[dict[str, Any]]]:

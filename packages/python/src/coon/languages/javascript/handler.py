@@ -25,15 +25,15 @@ class JavaScriptHandler(LanguageHandler):
 
     def get_keywords(self) -> dict[str, str]:
         """Get keyword abbreviations for JavaScript."""
-        return self._spec_data.get("keywords", {})
+        return dict(self._spec_data.get("keywords", {}))
 
     def get_type_abbreviations(self) -> dict[str, str]:
         """Get type/class abbreviations for JavaScript."""
-        return self._spec_data.get("types", {})
+        return dict(self._spec_data.get("types", {}))
 
     def get_property_abbreviations(self) -> dict[str, str]:
         """Get property/parameter abbreviations for JavaScript."""
-        return self._spec_data.get("properties", {})
+        return dict(self._spec_data.get("properties", {}))
 
     def create_lexer(self) -> Any:
         """Create a lexer instance for JavaScript."""

@@ -12,7 +12,7 @@ Available Strategies:
     - ComponentRefStrategy: Component registry lookup, 70-80% reduction
 """
 
-from typing import Optional
+from typing import Any, Optional
 
 from .aggressive import AggressiveStrategy
 from .ast_based import ASTBasedStrategy
@@ -30,7 +30,7 @@ _STRATEGIES: dict[str, type[CompressionStrategy]] = {
 }
 
 
-def get_strategy(name: str, **kwargs) -> CompressionStrategy:
+def get_strategy(name: str, **kwargs: Any) -> CompressionStrategy:
     """
     Factory function to get a strategy by name.
 

@@ -6,10 +6,12 @@ This enables support for multiple programming languages (Dart, Python, TypeScrip
 """
 
 from .base import LanguageHandler, LanguageSpec
+from .dart import DartLanguageHandler
 from .registry import LanguageRegistry
 
 __all__ = [
     "LanguageHandler",
     "LanguageSpec",
     "LanguageRegistry",
+    "DartLanguageHandler",
 ]

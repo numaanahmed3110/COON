@@ -89,7 +89,12 @@ class CompressionStrategy(ABC):
                 self._properties = get_properties()
                 self._keywords = get_keywords()
 
-        return self._widgets, self._properties, self._keywords
+        # Return with safe fallbacks to empty dicts
+        return (
+            self._widgets or {},
+            self._properties or {},
+            self._keywords or {}
+        )
 
     @property
     @abstractmethod

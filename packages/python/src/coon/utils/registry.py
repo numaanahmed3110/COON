@@ -263,7 +263,7 @@ class ComponentRegistry:
         """Get all unique categories."""
         return list({c.category for c in self.components.values()})
 
-    def save_to_file(self, filepath: Optional[str] = None):
+    def save_to_file(self, filepath: Optional[str] = None) -> None:
         """
         Save registry to JSON file.
 
@@ -282,7 +282,7 @@ class ComponentRegistry:
         with open(target_path, "w") as f:
             json.dump(data, f, indent=2)
 
-    def load_from_file(self, filepath: Optional[str] = None):
+    def load_from_file(self, filepath: Optional[str] = None) -> None:
         """
         Load registry from JSON file.
 
@@ -301,7 +301,7 @@ class ComponentRegistry:
             component = Component(**comp_data)
             self.components[component.id] = component
 
-    def clear(self):
+    def clear(self) -> None:
         """Clear all registered components."""
         self.components.clear()
 

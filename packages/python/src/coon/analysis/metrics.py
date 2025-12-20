@@ -6,7 +6,7 @@ import json
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 
 @dataclass
@@ -48,7 +48,7 @@ class CompressionMetric:
         """Calculate percentage saved."""
         return self.compression_ratio * 100
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary."""
         return {
             "timestamp": self.timestamp,
@@ -101,7 +101,7 @@ class MetricsCollector:
         success: bool,
         reversible: bool,
         error_message: Optional[str] = None,
-    ):
+    ) -> None:
         """
         Record a compression metric.
 
@@ -134,7 +134,7 @@ class MetricsCollector:
         if self.storage_path:
             self.save()
 
-    def get_summary(self) -> dict:
+    def get_summary(self) -> dict[str, Any]:
         """
         Get summary statistics.
 
@@ -177,7 +177,7 @@ class MetricsCollector:
             "total_compressed_tokens": sum(m.compressed_tokens for m in successful),
         }
 
-    def get_strategy_breakdown(self) -> dict[str, dict]:
+    def get_strategy_breakdown(self) -> dict[str, dict[str, Any]]:
         """
         Get metrics broken down by strategy.
 
@@ -216,7 +216,7 @@ class MetricsCollector:
 
     def get_cost_savings(
         self, input_cost_per_1k: float = 0.03, output_cost_per_1k: float = 0.06
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Calculate cost savings based on token reduction.
 
@@ -257,11 +257,11 @@ class MetricsCollector:
         """Get all failed compressions."""
         return [m for m in self.metrics if not m.success]
 
-    def clear(self):
+    def clear(self) -> None:
         """Clear all metrics."""
         self.metrics.clear()
 
-    def save(self, filepath: Optional[str] = None):
+    def save(self, filepath: Optional[str] = None) -> None:
         """
         Save metrics to JSON file.
 
@@ -280,7 +280,7 @@ class MetricsCollector:
         with open(target_path, "w") as f:
             json.dump(data, f, indent=2)
 
-    def load(self, filepath: Optional[str] = None):
+    def load(self, filepath: Optional[str] = None) -> None:
         """
         Load metrics from JSON file.
 

@@ -7,6 +7,7 @@ from collections import Counter
 from dataclasses import dataclass
 
 from ..data import get_widgets
+from typing import Any
 
 
 @dataclass
@@ -48,7 +49,7 @@ class AnalysisResult:
         """Get n most common properties."""
         return Counter(self.property_frequency).most_common(n)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary representation."""
         return {
             "widget_frequency": self.widget_frequency,
@@ -164,7 +165,7 @@ class CodeAnalyzer:
         "flexibleSpace",
     }
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the analyzer."""
         # Merge with widgets from data file for comprehensive tracking
         try:
