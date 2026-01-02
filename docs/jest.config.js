@@ -13,8 +13,7 @@ module.exports = {
                 module: 'commonjs',
                 moduleResolution: 'node',
                 esModuleInterop: true,
-                target: 'es2019',
-                rootDir: '../'
+                target: 'es2019'
             }
         }]
     }
