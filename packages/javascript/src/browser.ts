@@ -14,7 +14,7 @@
  * 2. Run: npm run generate:browser
  * 3. Commit both the spec changes and this generated file
  * 
- * Generated: 2026-01-02T06:03:08.216Z
+ * Generated: 2026-01-02T06:08:51.368Z
  * 
  * @packageDocumentation
  */
@@ -234,15 +234,15 @@ export const jsProperties: Record<string, string> = {
   "name": "nm",
   "href": "hr",
   "src": "sr",
-  "alt": "al",
+  "alt": "alt",
   "title": "tt",
   "target": "tg",
   "rel": "rl",
   "htmlFor": "hf",
   "tabIndex": "ti",
-  "aria-label": "al",
+  "aria-label": "arl",
   "aria-describedby": "ad",
-  "role": "ro",
+  "role": "rol",
 };
 
 // ============================================================================
